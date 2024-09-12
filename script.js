@@ -9,9 +9,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     page.pageNum = i + 1;  // Store page number
   }
+
   // Add click event listeners to flip pages
   for (var i = 0; i < pages.length; i++) {
-    pages[i].onclick = function() {
+    pages[i].onclick = function(event) {
+      // Prevent page flip logic if the clicked element is an <a> tag or inside one
+      if (event.target.closest('a')) {
+        return;  // Allow the default behavior for links (follow the link)
+      }
+      
+      // Page flipping logic
       if (this.pageNum % 2 === 0) {
         this.classList.remove('flipped');
         this.previousElementSibling.classList.remove('flipped');
